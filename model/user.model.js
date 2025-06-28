@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 
 
 const userSchema=mongoose.Schema({
-    name:String,
+    email:String,
     pass:String,
     location:String
 },{versionKey:false})
