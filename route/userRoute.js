@@ -66,7 +66,7 @@ userRouter.get("/data",(req,res)=>{
     // const token=(req.query.token)
     //we will take token from headers.authorization
     //to decode the token jwt.verify
-    const {token}=req.query
+   const token=req.headers.authorization
     console.log(token)
     jwt.verify(token,'masai',(err,decoded)=>{
         decoded?res.status(200).send("user details"):res.status(400).send(err,"cannot access restricted routes, please login first")
@@ -76,7 +76,7 @@ userRouter.get("/data",(req,res)=>{
 })
 userRouter.get("/cart",(req,res)=>{
     
-    const token=(req.query.token)
+    const token=req.headers.authorization
     jwt.verify(token,"masai",(err,decoded)=>{
         decoded? res.send({"msg":"user login successfully to cart page"}):
          res.status(200).send({"msg":"invalid user", err})
