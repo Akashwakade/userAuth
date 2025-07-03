@@ -29,31 +29,36 @@ userRouter.post("/register",async(req,res)=>{
    
 })
 
-//login
-//when token will generate? after login
-userRouter.post("/login",async(req,res)=>{
-    const{email,pass}=req.body
+// Login Route
+userRouter.post("/login", async (req, res) => {
+    const { email, pass } = req.body;
 
-   
-   try {
-    const user= await userModel.findOne({email})
-    console.log(user)
- if(user) {
-     bcrypt.compare(pass, user.pass, (err, result)=> {
+    try {
+        // Find user by email
+        const user = await userModel.findOne({ email });
 
-    if(result){
-        res.status(200).send(({"msg":"Login successfull!","token":jwt.sign({"course":"backend"},"masai")}))
-    }else{
-        res.status(400).send({"msg":"Wrong Credentials"},err)
+        if (!user) {
+            return res.status(400).send({ msg: "User not present in database" });
+        }
+
+        // Compare provided password with hashed password in DB
+        bcrypt.compare(pass, user.pass, (err, result) => {
+            if (err) {
+                console.error("Bcrypt Error:", err);
+                return res.status(500).send({ msg: "Internal server error" });
+            }
+     //userID will generate by database
+            if (result) {
+                const token = jwt.sign({ userID: user._id }, "masai");
+                return res.status(200).send({ msg: "Login successful!", token });
+            } else {
+                return res.status(400).send({ msg: "Wrong credentials" });
+            }
+        });
+    } catch (err) {
+        return res.status(500).send({ msg: err.message });
     }
-     
 });
- }  
-   } catch (err) {
-    res.status(400).send({"msg":err.message})
-   }
-   
-})
 
 
 //get route

@@ -12,6 +12,7 @@ app.use("/user",userRouter)
 app.use(authMiddleware)
 app.use("/note",noteRouter)
 
+
 app.listen(process.env.port,async()=>{
     try {
          await connection

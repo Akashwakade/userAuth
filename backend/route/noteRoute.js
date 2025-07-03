@@ -21,6 +21,7 @@ noteRouter.get("/",async(req,res)=>{
 noteRouter.get("/:id",async(req,res)=>{
     try {
         const note= await noteModel.findOne({_id:req.params.id})
+        
     res.status(200).send({"msg":"note found!" , "data": note})
     } catch (error) {
         res.status(400).send({"msg":"problem getting a note"})
@@ -32,6 +33,7 @@ noteRouter.get("/:id",async(req,res)=>{
 noteRouter.post("/addNote",async(req,res)=>{
     try {
         const note= new noteModel(req.body)
+        
    await note.save()
 //    console.log(note)
    res.status(200).send({"msg":"a new note has been added"})

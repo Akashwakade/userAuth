@@ -1,9 +1,14 @@
 const jwt=require("jsonwebtoken")
+
+
+//goal==> put user id inside note using middleware
 const authMiddleware=(req,res,next)=>{
      const token=req.headers.authorization //taking token from headers
      if(token){ //if token is there then verify usgin jwt we also store the decoded token also
         const decoded=jwt.verify(token,"masai")
         if(decoded){
+             console.log(decoded)
+            req.body.userID=decoded.userID
             next()
         }else{
             res.status(400).send({"msg":"Please login first!!!"})
