@@ -44,7 +44,7 @@ userRouter.post("/login",async(req,res)=>{
     if(result){
         res.status(200).send(({"msg":"Login successfull!","token":jwt.sign({"course":"backend"},"masai")}))
     }else{
-        res.status(400).send({"msg":"Wrong Credentials"})
+        res.status(400).send({"msg":"Wrong Credentials"},err)
     }
      
 });
