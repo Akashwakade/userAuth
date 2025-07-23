@@ -1,19 +1,17 @@
 import { useState } from "react";
 
-const Signup = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [location, setLocation] = useState("");
 
   //function to handle submit
   const handleSubmit = () => {
     const payload = {
       email: email,
-      pass: pass,
-      location: location,
+      pass: pass
     };
     console.log(payload);
-    fetch("http://localhost:8080/user/register", {
+    fetch("http://localhost:8080/user/login", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(payload),
@@ -41,17 +39,11 @@ const Signup = () => {
         placeholder="Enter password"
         onChange={(e) => setPass(e.target.value)}
       />
-      Location:{" "}
-      <input
-        type="location"
-        value={location}
-        placeholder="where are you from"
-        onChange={(e) => setLocation(e.target.value)}
-      />
+    
       <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 };
 
-export { Signup };
+export { Login };
 //now add this inside app.js

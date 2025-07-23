@@ -8,7 +8,7 @@ const authMiddleware=(req,res,next)=>{
         const decoded=jwt.verify(token,"masai")
         if(decoded){
              console.log(decoded)
-            req.body.userID=decoded.userID
+            req.body.userID=decoded.userID //user id has been added from here in the note document
             next()
         }else{
             res.status(400).send({"msg":"Please login first!!!"})
